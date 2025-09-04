@@ -1,11 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Home from './pages/Home'
-import Gallery from './pages/Gallery'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import PushFile from './pages/PushFile'
-import { GalleryProvider } from './context/GalleryContext'
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Gallery from './pages/Gallery';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import PushFile from './pages/PushFile';
+import { GalleryProvider } from './context/GalleryContext';
 
 export default function App() {
   return (
@@ -43,5 +43,5 @@ export default function App() {
         </div>
       </BrowserRouter>
     </GalleryProvider>
-  )
+  );
 }
