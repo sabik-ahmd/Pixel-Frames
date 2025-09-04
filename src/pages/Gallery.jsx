@@ -1,43 +1,22 @@
-import React, { useContext } from "react";
-import { GalleryContext } from "../context/GalleryContext";
+import React, { useEffect, useState } from "react";
 
-const Gallery = () => {
-  const { files } = useContext(GalleryContext);
+export default function Gallery() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetch("/.netlify/functions/listFiles")
+      .then((res) => res.json())
+      .then((data) => setImages(data));
+  }, []);
 
   return (
     <div>
-      <h1 className="text-2xl mb-6 text-center">Gallery</h1>
-      {files.length === 0 ? (
-        <p className="text-center">No files uploaded yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {files.map((file) => (
-            <div
-              key={file.public_id}
-              className="bg-gray-800 rounded-lg overflow-hidden shadow-lg"
-            >
-              {file.resource_type === "video" ? (
-                <video
-                  controls
-                  className="w-full h-64 object-cover"
-                  src={file.secure_url}
-                />
-              ) : (
-                <img
-                  src={file.secure_url}
-                  alt="uploaded"
-                  className="w-full h-64 object-cover"
-                />
-              )}
-              <div className="p-2 text-sm text-gray-300 text-center">
-                {file.public_id}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+      <h1>Gallery</h1>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "10px" }}>
+        {images.map((img) => (
+          <img key={img.public_id} src={img.secure_url} alt="" style={{ width: "100%" }} />
+        ))}
+      </div>
     </div>
   );
-};
-
-export default Gallery;
+}

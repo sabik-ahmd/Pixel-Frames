@@ -1,59 +1,29 @@
-import React, { useState, useContext } from "react";
-import { GalleryContext } from "../context/GalleryContext";
+import React, { useState } from "react";
 
-const PushFile = () => {
+export default function PushFile() {
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { fetchGallery } = useContext(GalleryContext);
-
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
   const handleUpload = async () => {
-    if (!file) return alert("Please select a file");
+    if (!file) return;
 
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-
-    try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data = await response.json();
-      console.log("Uploaded:", data);
-
-      setFile(null);
-      fetchGallery(); // refresh gallery after upload
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-    setLoading(false);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      const res = await fetch("/.netlify/functions/upload", {
+        method: "POST",
+        body: JSON.stringify({ file: reader.result }),
+      });
+      const data = await res.json();
+      alert("Uploaded successfully!");
+      console.log(data);
+    };
   };
 
   return (
-    <div className="text-center">
-      <h1 className="text-2xl mb-4">Upload a File</h1>
-      <input
-        type="file"
-        onChange={(e) => setFile(e.target.files[0])}
-        className="mb-4"
-      />
-      <button
-        onClick={handleUpload}
-        disabled={loading}
-        className="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700"
-      >
-        {loading ? "Uploading..." : "Upload"}
-      </button>
+    <div>
+      <h1>Upload File</h1>
+      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+      <button onClick={handleUpload}>Upload</button>
     </div>
   );
-};
-
-export default PushFile;
+}

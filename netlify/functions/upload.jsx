@@ -8,8 +8,7 @@ export async function handler(event) {
   const body = JSON.parse(event.body);
   const { file } = body;
 
-  // Use Cloudinary unsigned upload preset OR signed upload
-  const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/auto/upload`;
+  const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/upload`;
 
   const res = await fetch(url, {
     method: "POST",
