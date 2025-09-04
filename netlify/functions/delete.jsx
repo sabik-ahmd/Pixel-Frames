@@ -3,8 +3,8 @@ import cloudinary from "cloudinary";
 
 cloudinary.v2.config({
   cloud_name: "du52qhm9z",          // ✅ your cloud name
-  api_key: process.env.CLOUDINARY_KEY,     // set in Netlify dashboard
-  api_secret: process.env.CLOUDINARY_SECRET // set in Netlify dashboard
+  api_key: process.env.613888884572576,     // set in Netlify dashboard
+  api_secret: process.env.********************************* // set in Netlify dashboard
 });
 
 export async function handler(event) {

@@ -1,10 +1,10 @@
 import fetch from "node-fetch";
 
 export async function handler() {
-  const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/resources/image`;
+  const url = `https://api.cloudinary.com/v1_1/${process.env.du52qhm9z}/resources/image`;
 
   const auth = Buffer.from(
-    `${process.env.CLOUDINARY_API_KEY}:${process.env.CLOUDINARY_API_SECRET}`
+    `${process.env.613888884572576}:${process.env.*********************************}`
   ).toString("base64");
 
   const res = await fetch(url, {
